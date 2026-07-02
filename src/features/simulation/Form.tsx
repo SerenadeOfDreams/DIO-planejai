@@ -1,7 +1,14 @@
+import { simulationFormSteps } from "../../data/simulation";
+import { FormStep } from "./FormStep";
+import { StepProgress } from "./Progress";
+
 export const SimulationForm = () => {
+  const currentStep = simulationFormSteps[5];
+
   return (
     <>
-      <h1>Formulário de solicitação</h1>
+      <StepProgress currentStep={6} totalSteps={6} />
+      <FormStep key={currentStep.id} {...currentStep} />
     </>
   );
 };
