@@ -18,7 +18,7 @@ export interface FormStepProps {
 
 interface ButtonActionsProps {
   onBack: () => void;
-  onNext: () => void;
+  onNext: (value: string) => void;
   hideBackButton?: boolean;
 }
 
@@ -32,6 +32,8 @@ export function FormStep({
   onNext,
   hideBackButton,
 }: FormStepProps & ButtonActionsProps) {
+  const [inputValue, setInputValue] = useState("");
+
   const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -39,10 +41,8 @@ export function FormStep({
       return;
     }
 
-    onNext();
+    onNext(inputValue);
   };
-
-  const [inputValue, setInputValue] = useState("");
 
   return (
     <div className="bg-card rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] sm:p-8">
