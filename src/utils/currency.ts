@@ -12,3 +12,10 @@ export function formatCurrencyMask(value: string): string {
     maximumFractionDigits: 2,
   });
 }
+
+export function ParseCurrency(value: string) {
+  return (
+    parseFloat(value.replace(/\./g, "").replace(",", ".").replace("R$", "")) ||
+    0
+  );
+}
