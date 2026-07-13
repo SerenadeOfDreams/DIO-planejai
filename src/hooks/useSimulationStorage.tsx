@@ -28,5 +28,14 @@ export const useSimulationStorage = () => {
     return savedData.find((record) => record.id == id) || null;
   };
 
-  return { saveFormData, getFormData };
+  const getSimulationHistory = () => {
+    const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (!storage) return null;
+
+    const savedData = JSON.parse(storage) as SimulationRecord[];
+
+    return savedData;
+  };
+
+  return { saveFormData, getFormData, getSimulationHistory };
 };
