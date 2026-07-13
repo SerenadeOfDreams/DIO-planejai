@@ -31,7 +31,7 @@ export function SimulationResultsPage() {
         <Card
           icon={CalendarClock}
           label="Prazo"
-          value={`${data.goalDeadLine} meses`}
+          value={`${data.goalDeadLine} ${Number(data.goalDeadLine) == 1 ? "mês" : "meses"}`}
           caption={"Prazo para atingir a meta"}
         />
         <Card
