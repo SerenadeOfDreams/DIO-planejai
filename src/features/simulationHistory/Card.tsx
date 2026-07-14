@@ -1,5 +1,6 @@
 import { Goal, SquareArrowOutUpRight, Trash2 } from "lucide-react";
 import { Button } from "../../components/shared/Button";
+import { Divider } from "../../components/shared/Divider";
 import { ParseCurrency } from "../../utils/currency";
 
 interface CardProps {
@@ -12,6 +13,11 @@ interface CardProps {
   debts: string;
 }
 
+interface ButtonActionProps {
+  onRemoveItem: () => void;
+  onToSimulation: () => void;
+}
+
 export function Card({
   goalName,
   simulationDate,
@@ -20,19 +26,20 @@ export function Card({
   income,
   expenses,
   debts,
-}: CardProps) {
+  onRemoveItem,
+  onToSimulation,
+}: CardProps & ButtonActionProps) {
   const monthlySavings =
     ParseCurrency(income) - ParseCurrency(expenses) - ParseCurrency(debts);
   return (
     <>
-      <div className="rounded-2xl flex flex-col gap-6 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:flex-row lg:items-center gap-0 lg:justify-between">
-        <div className="flex gap-6 items-center">
+      <div className="rounded-2xl flex flex-col gap-6 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:flex-row lg:items-center gap-0 lg:justify-evenly">
+        <div className="flex flex-1 min-w-0 gap-6 items-center">
           <div className="bg-muted-primary rounded-xl p-3">
             <Goal size={24} className="text-muted-primary-foreground" />
           </div>
-
-          <div className="">
-            <p className="text-xl font-semibold">{goalName}</p>
+          <div className="min-w-0">
+            <p className="text-xl font-semibold truncate">{goalName}</p>
             <p className="text-sm">{simulationDate}</p>
           </div>
         </div>
@@ -52,16 +59,24 @@ export function Card({
           <p className="font-semibold">{`R$ ${monthlySavings.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</p>
         </div>
 
-        {/* <Divider orientation="vertical" /> */}
+        <Divider orientation="horizontal" className="lg:hidden" />
 
-        <div className="flex flex-row w-full justify-center lg:w-auto">
-          <Button variant="ghost" icon={Trash2}>
-            {/* <Trash2 size={24} />s */}
-          </Button>
-          <Button variant="secondary" icon={SquareArrowOutUpRight}>
-            {/* <SquareArrowOutUpRight size={24} /> */}
-            Ver detalhes
-          </Button>
+        <div className="flex">
+          <Divider orientation="vertical" className="hidden lg:block" />
+          <div className="flex flex-row w-full justify-center lg:w-auto lg:gap-3">
+            <Button
+              variant="ghost"
+              icon={Trash2}
+              onClick={onRemoveItem}
+            ></Button>
+            <Button
+              variant="secondary"
+              icon={SquareArrowOutUpRight}
+              onClick={onToSimulation}
+            >
+              Ver detalhes
+            </Button>
+          </div>
         </div>
       </div>
     </>
