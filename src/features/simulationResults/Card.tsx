@@ -35,7 +35,7 @@ export function Card({
   return (
     <div
       className={[
-        "rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]",
+        "min-w-0 flex-1 rounded-2xl p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]",
         styles.card,
       ].join(" ")}
     >
@@ -53,7 +53,9 @@ export function Card({
       <p className={["text-3xl font-semibold", styles.value].join(" ")}>
         {value}
       </p>
-      <p className={["mt-1 text-sm", styles.subtitle].join(" ")}>{caption}</p>
+      <p className={["mt-1 text-sm truncate", styles.subtitle].join(" ")}>
+        {caption}
+      </p>
     </div>
   );
 }
