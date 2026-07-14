@@ -1,10 +1,28 @@
+import { useNavigate } from "react-router-dom";
 import { PageHero } from "../components/shared/PageHero";
+import type { SimulationRecord } from "../data/simulation";
 import { Card } from "../features/simulationHistory/Card";
 import { useSimulationStorage } from "../hooks/useSimulationStorage";
 
 export function SimulationHistoryPage() {
   const { getSimulationHistory } = useSimulationStorage();
   const data = getSimulationHistory();
+  const navigate = useNavigate();
+  const LOCAL_STORAGE_KEY = "simulation-data";
+
+  const removeItem = (index: number) => {
+    const storage = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const savedData = storage
+      ? (JSON.parse(storage) as SimulationRecord[])
+      : [];
+
+    savedData.splice(index, 1);
+
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(savedData));
+
+    void navigate("/historico");
+    return;
+  };
 
   if (!data) return <p>Não há simulações</p>;
 
@@ -20,12 +38,14 @@ export function SimulationHistoryPage() {
           <Card
             key={index}
             goalName={data[index].goalName}
-            simulationDate="10/07/2026"
+            simulationDate={`Criada em: ${data[index].date}`}
             goalAmount={data[index].goalAmount}
             goalDeadline={data[index].goalDeadLine}
             income={data[index].income}
             expenses={data[index].expenses}
             debts={data[index].debts}
+            onRemoveItem={() => void removeItem(index)}
+            onToSimulation={() => void navigate(`/resultado/${data[index].id}`)}
           />
         ))}
       </div>
