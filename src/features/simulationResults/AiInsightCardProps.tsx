@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useInsight } from "../../hooks/useInsight";
 import { Content } from "../insights/Content";
 import { Error } from "../insights/Error";
@@ -8,7 +7,6 @@ interface AiInsightCardProps {
 }
 
 export function AiInsightCard({ simulationId }: AiInsightCardProps) {
-  const navigate = useNavigate();
   const { insight, isLoading, error, fetchInsight } = useInsight(simulationId);
   console.log(insight);
 
