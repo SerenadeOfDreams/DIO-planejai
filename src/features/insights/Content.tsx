@@ -1,70 +1,97 @@
+import type { PropsWithChildren } from "react";
+import type { InsightData } from "../../services/aiService";
+
 interface ContentProps {
-  diagnosis: string;
-  feasibility: {
-    content: string;
-    status: string;
-  };
-  suggestions: string[];
-  extraIncome: string[];
-  investiment: string[];
-  motivation: string;
+  insight: InsightData;
 }
 
-export function Content({
-  diagnosis,
-  feasibility: { content, status },
-  suggestions,
-  extraIncome,
-  investiment,
-  motivation,
-}: ContentProps) {
+function Paragraph({ children }: PropsWithChildren) {
   return (
-    <div className="flex h-full flex-col gap-10 px-6">
-      <p>{diagnosis}</p>
+    <p className="text-muted-foreground text-sm leading-relaxed">{children}</p>
+  );
+}
 
-      <div className="flex flex-col gap-1.5">
-        <p className="text-2xl text-foreground font-semibold">
-          Viabilidade da meta:
-        </p>
-        {status == "viable" && <p>Viável</p>}
-        {status == "needs_adjustment" && <p>Precisa de ajustes</p>}
-        {status == "unfeasible" && <p>Inviável</p>}
-        <p>{content}</p>
-      </div>
+function SectionTitle({ children }: PropsWithChildren) {
+  return (
+    <h3 className="text-foreground mt-5 mb-1.5 text-sm leading-relaxed font-semibold">
+      {children}
+    </h3>
+  );
+}
 
-      <div className="flex flex-col gap-1 5">
-        <p className="text-2xl font-semibold">Sugestões:</p>
-        {suggestions.map((s, index) => (
-          <p>
-            <b>.{index + 1} -</b> {s}
-          </p>
-        ))}
-      </div>
+function OrderedList({ items }: { items: string[] }) {
+  return (
+    <ol className="text-muted-foreground ml-6 list-decimal text-sm leading-relaxed">
+      {items.map((item, index) => (
+        <li key={index} className="pl-1">
+          {item}
+        </li>
+      ))}
+    </ol>
+  );
+}
 
-      <div className="flex flex-col gap-1 5">
-        <p className="text-2xl font-semibold">Renda extra:</p>
-        {extraIncome.map((ei, index) => (
-          <p>
-            <b>.{index + 1} -</b> {ei}
-          </p>
-        ))}
-      </div>
+const statusStyles = {
+  viable: {
+    label: "Meta viável no prazo",
+    className:
+      "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+  },
+  needs_adjustment: {
+    label: "Ajuste necessário",
+    className:
+      "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+  },
+  unfeasible: {
+    label: "Meta inviável no prazo",
+    className: "bg-red-100 text-red-700 dark: bg-red-900/30 dark: text-red-400",
+  },
+};
 
-      <div className="flex flex-col gap-1 5">
-        <p className="text-2xl font-semibold">Investimentos:</p>
-        {investiment.map((i, index) => (
-          <p>
-            <b>.{index + 1} -</b> {i}
-          </p>
-        ))}
-      </div>
+export function Content({ insight }: ContentProps) {
+  const status = statusStyles[insight.feasibility.status] ?? null;
+  return (
+    <div className="lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]">
+      <section className="flex flex-col gap-2">
+        <div className="flex flex-col items-start gap-2 sm:flex-row">
+          <span className="text-foreground text-sm font-semibold">
+            🎯 Viabilidade da meta
+          </span>
+          {status && (
+            <span
+              className={`w-fit rounded-full px-2.5 py-0.5 text-xs font-semoibold ${status.className}`}
+            >
+              {status.label}
+            </span>
+          )}
+        </div>
+        <Paragraph>{insight.feasibility.content}</Paragraph>
+      </section>
 
-      <div className="flex flex-col gap-1 5">
-        {status == "unfeasible" && (
-          <p className="text-2xl font-semibold">Não desanime</p>
-        )}
-        <p>{motivation}</p>
-      </div>
+      <section>
+        <SectionTitle>💰 Diagnóstico financeiro</SectionTitle>
+        <Paragraph>{insight.diagnosis.content}</Paragraph>
+      </section>
+
+      <section>
+        <SectionTitle>📋 Sugestões práticas</SectionTitle>
+        <OrderedList items={insight.suggestions.items} />
+      </section>
+
+      <section>
+        <SectionTitle>💡 Como aumentar sua renda</SectionTitle>
+        <OrderedList items={insight.extraIncome.items} />
+      </section>
+
+      <section>
+        <SectionTitle>🏦 Sugestões de investimento</SectionTitle>
+        <OrderedList items={insight.investiment.items} />
+      </section>
+
+      <section>
+        <SectionTitle>🚀 Mensagem final</SectionTitle>
+        <Paragraph>{insight.motivation.content}</Paragraph>
+      </section>
     </div>
   );
 }
