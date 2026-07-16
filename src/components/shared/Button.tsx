@@ -3,7 +3,10 @@ import type { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "primary" | "secondary" | "ghost";
-  icon?: LucideIcon;
+  icon?: {
+    iconName: LucideIcon;
+    color?: string;
+  };
 }
 
 const baseClasses =
@@ -17,17 +20,19 @@ const variantClasses = {
 
 export function Button({
   variant,
-  icon: Icon,
+  icon,
   children,
   className,
   ...props
 }: ButtonProps) {
+  const { iconName: Icon, color } = icon ?? {};
+
   return (
     <button
       {...props}
       className={[baseClasses, variantClasses[variant], className].join(" ")}
     >
-      {Icon && <Icon size={20} />} {children}
+      {Icon && <Icon size={20} color={color} />} {children}
     </button>
   );
 }
