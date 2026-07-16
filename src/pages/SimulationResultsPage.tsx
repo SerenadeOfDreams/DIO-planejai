@@ -45,11 +45,13 @@ export function SimulationResultsPage() {
       </div>
       <div className="grid gap-6 lg:grid-cols-3">
         <AiInsightCard simulationId={data.id} />
-        <FinancialSummary
-          income={data.income}
-          expenses={data.expenses}
-          debts={data.debts}
-        />
+        <div className="lg:order-2 lg:min-w-0">
+          <FinancialSummary
+            income={data.income}
+            expenses={data.expenses}
+            debts={data.debts}
+          />
+        </div>
       </div>
     </main>
   );
