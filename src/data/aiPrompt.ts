@@ -35,15 +35,15 @@ export function BuildAIPrompt(simulation: SimulationRecord) {
   return `Você é um educador financeiro especializado em financas pessoais. Analise os dados abaixo e gere um diagnóstico financeiro personalizado com linguagem clara, didática e encorajadora, voltado para pessoas sem conhecimento financeiro. O diagnóstico será exibido diretamente ao usuário no app. Fale sempre em segunda pessoa ("você tem...", "sua meta...).
   
   Dados da simulação:
-  - Renda mensal bruta: R$ ${income} reais
-  - Custos fixos essenciais: ${expenses} reais
-  - Dívidas e parcelas mensais: ${debts} reais
-  - Valor disponível por mês: ${monthlySavings} reais
+  - Renda mensal bruta: R$ ${income}
+  - Custos fixos essenciais: R$ ${expenses}
+  - Dívidas e parcelas mensais: R$ ${debts}
+  - Valor disponível por mês: R$ ${monthlySavings}
   - Meta: ${goalName}
-  - Custo da meta: ${goalAmount} reais
+  - Custo da meta: R$ ${goalAmount}
   - Prazo desejado: ${goalDeadLine} mês/meses
-  - Economia mensal necessária para atingir a meta no prazo: ${monthlySavingsNeeded} reais
-  - Saldo após reserva para a meta: ${monthlySavings - monthlySavingsNeeded} reais
+  - Economia mensal necessária para atingir a meta no prazo: R$ ${monthlySavingsNeeded}
+  - Saldo após reserva para a meta: R$ ${monthlySavings - monthlySavingsNeeded}
   
   Retorne APENAS um JSON válido, sem texto adicional e sem blocos de código, neste exato formato:
   
