@@ -33,7 +33,7 @@ export function Card({
     ParseCurrency(income) - ParseCurrency(expenses) - ParseCurrency(debts);
   return (
     <>
-      <div className="rounded-2xl flex flex-col gap-6 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:flex-row lg:items-center gap-0 lg:justify-evenly">
+      <div className="bg-card rounded-2xl flex flex-col gap-6 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:flex-row lg:items-center gap-0 lg:justify-evenly">
         <div className="flex flex-1 min-w-0 gap-6 items-center">
           <div className="bg-muted-primary rounded-xl p-3">
             <Goal size={24} className="text-muted-primary-foreground" />
