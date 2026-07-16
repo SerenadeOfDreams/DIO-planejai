@@ -26,7 +26,7 @@ export function SimulationResultsPage() {
         <Card
           icon={Goal}
           label="Custo da meta"
-          value={data.goalAmount}
+          value={`R$ ${data.goalAmount}`}
           caption={data.goalName}
         />
         <Card

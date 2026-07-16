@@ -46,7 +46,7 @@ export function Card({
 
         <div className="">
           <p>CUSTO DA META</p>
-          <p className="font-semibold">{goalAmount}</p>
+          <p className="font-semibold">R$ {goalAmount}</p>
         </div>
         <div className="">
           <p>PRAZO</p>

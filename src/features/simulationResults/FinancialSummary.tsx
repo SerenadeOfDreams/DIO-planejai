@@ -25,7 +25,7 @@ export function FinancialSummary({
             Renda mensal
           </span>
         </div>
-        <p className="text-3xl text-foreground font-semibold">{income}</p>
+        <p className="text-3xl text-foreground font-semibold">R$ {income}</p>
         <p className="mt-1 text-sm text-muted-foreground">
           Renda total bruta por mês
         </p>
@@ -39,7 +39,7 @@ export function FinancialSummary({
             Custos fixos de vida
           </span>
         </div>
-        <p className="text-3xl text-foreground font-semibold">{expenses}</p>
+        <p className="text-3xl text-foreground font-semibold">R$ {expenses}</p>
         <p className="mt-1 text-sm text-muted-foreground">
           Gastos essenciais por mês
         </p>
@@ -53,7 +53,7 @@ export function FinancialSummary({
             Dívidas / Parcelas
           </span>
         </div>
-        <p className="text-3xl text-foreground font-semibold">{debts}</p>
+        <p className="text-3xl text-foreground font-semibold">R$ {debts}</p>
         <p className="mt-1 text-sm text-muted-foreground">
           Valor comprometido em parcelas/depósito
         </p>
