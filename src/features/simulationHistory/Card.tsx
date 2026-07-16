@@ -66,12 +66,15 @@ export function Card({
           <div className="flex flex-row w-full justify-center lg:w-auto lg:gap-3">
             <Button
               variant="ghost"
-              icon={Trash2}
+              icon={{
+                iconName: Trash2,
+                color: "red",
+              }}
               onClick={onRemoveItem}
             ></Button>
             <Button
               variant="secondary"
-              icon={SquareArrowOutUpRight}
+              icon={{ iconName: SquareArrowOutUpRight }}
               onClick={onToSimulation}
             >
               Ver detalhes

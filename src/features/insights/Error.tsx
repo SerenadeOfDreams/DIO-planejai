@@ -16,7 +16,7 @@ export function Error({ simulationId, message, onRetry }: ErrorProps) {
       <Button
         variant="primary"
         className="px-6"
-        icon={RefreshCcw}
+        icon={{ iconName: RefreshCcw }}
         onClick={onRetry}
       >
         Tentar novamente

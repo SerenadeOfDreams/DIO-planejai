@@ -73,7 +73,7 @@ export function FormStep({
               type="button"
               onClick={onBack}
               variant="ghost"
-              icon={ArrowLeft}
+              icon={{ iconName: ArrowLeft }}
               className="order-2 flex-1 justify-center rounded-xl py-3 sm:order-1"
             >
               Voltar
@@ -82,7 +82,7 @@ export function FormStep({
           <Button
             type="submit"
             variant="primary"
-            icon={!submitButtonProps ? ArrowRight : undefined}
+            icon={!submitButtonProps ? { iconName: ArrowRight } : undefined}
             disabled={!inputValue}
             className="order-1 flex-1 sm:order-2"
           >

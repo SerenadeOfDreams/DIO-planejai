@@ -24,14 +24,14 @@ export function Header() {
         <div className="flex items-center gap-1">
           <Button
             variant="secondary"
-            icon={TrendingUp}
+            icon={{ iconName: TrendingUp }}
             onClick={() => void navigate("/")}
           >
             <span className="hidden sm:inline">Nova simulação</span>
           </Button>
           <Button
             variant="ghost"
-            icon={Clock}
+            icon={{ iconName: Clock }}
             onClick={() => void navigate("/historico")}
           >
             <span className="hidden sm:inline">Histórico</span>
@@ -39,7 +39,7 @@ export function Header() {
           <Divider orientation="vertical" />
           <Button
             variant="ghost"
-            icon={theme == "light" ? Moon : Sun}
+            icon={{ iconName: theme == "light" ? Moon : Sun }}
             onClick={toggleTheme}
           />
         </div>
