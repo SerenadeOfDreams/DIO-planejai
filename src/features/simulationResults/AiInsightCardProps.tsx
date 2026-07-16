@@ -42,19 +42,7 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
           }}
         />
       )}
-      {!isLoading && insight && !error && (
-        <Content
-          diagnosis={insight.diagnosis.content}
-          feasibility={{
-            content: insight.feasibility.content,
-            status: insight.feasibility.status,
-          }}
-          suggestions={insight.suggestions.items}
-          extraIncome={insight.extraIncome.items}
-          investiment={insight.investiment.items}
-          motivation={insight.motivation.content}
-        />
-      )}
+      {!isLoading && insight && !error && <Content insight={insight} />}
     </div>
   );
 }
