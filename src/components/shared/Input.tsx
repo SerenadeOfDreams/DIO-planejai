@@ -1,12 +1,13 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactElement } from "react";
 import { Divider } from "./Divider";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   prefix?: string;
   suffix?: string;
+  button?: ReactElement;
 }
 
-export function Input({ prefix, suffix, ...rest }: InputProps) {
+export function Input({ prefix, suffix, button, ...rest }: InputProps) {
   return (
     <div className="bg-input flex items-center rounded-2xl p-4 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]">
       {prefix && (
@@ -29,6 +30,13 @@ export function Input({ prefix, suffix, ...rest }: InputProps) {
           <span className="text-muted-foreground ml-3 text-sm font-medium">
             {suffix}
           </span>
+        </>
+      )}
+
+      {button && (
+        <>
+          {/* <Divider orientation="vertical" /> */}
+          {button}
         </>
       )}
     </div>
