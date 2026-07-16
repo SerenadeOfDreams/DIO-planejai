@@ -13,7 +13,7 @@ export function FinancialSummary({
   debts,
 }: FinancialSummaryProps) {
   return (
-    <div className="bg-card order-1 rounded-2xl flex flex-col gap-4 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)] lg:order-2">
+    <div className="bg-card order-1 rounded-2xl flex flex-col gap-4 p-6 shadow-[4px_4px_18px_0px_rgba(0,0,0,0.2)]">
       <p className="text-xl text-foreground font-semibold">
         Resumo das suas finanças
       </p>
