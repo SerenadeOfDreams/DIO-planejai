@@ -1,5 +1,8 @@
+import { Send } from "lucide-react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Button } from "../../components/shared/Button";
+import { Input } from "../../components/shared/Input";
 import { useInsight } from "../../hooks/useInsight";
 import { Content } from "../insights/Content";
 import { Error } from "../insights/Error";
@@ -42,7 +45,16 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
           }}
         />
       )}
-      {!isLoading && insight && !error && <Content insight={insight} />}
+      {!isLoading && insight && !error && (
+        <div className="flex flex-col gap-6">
+          <Content insight={insight} />
+          <Input
+            type="text"
+            placeholder="Digite sua mensagem..."
+            button={<Button variant="ghost" icon={{ iconName: Send }} />}
+          />
+        </div>
+      )}
     </div>
   );
 }
