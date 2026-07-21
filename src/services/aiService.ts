@@ -30,6 +30,13 @@ export interface InsightData {
   };
 }
 
+export interface ChatData {
+  interaction: {
+    request: string;
+    response: string;
+  };
+}
+
 const API_KEY = String(import.meta.env.VITE_GEMINI_API_KEY);
 const MODEL_NAME = "gemini-3.1-flash-lite";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
@@ -52,4 +59,10 @@ export const getInsight = async (prompt: string) => {
   const response = await callGeminiAPI(prompt);
   const json = response.candidates[0].content.parts[0].text;
   return JSON.parse(json) as InsightData;
+};
+
+export const getChatAnswer = async (prompt: string) => {
+  const response = await callGeminiAPI(prompt);
+  const json = response.candidates[0].content.parts[0].text;
+  return JSON.parse(json) as ChatData;
 };
