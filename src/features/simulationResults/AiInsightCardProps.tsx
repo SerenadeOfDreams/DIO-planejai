@@ -1,8 +1,10 @@
 import { Send } from "lucide-react";
+import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Button } from "../../components/shared/Button";
 import { Input } from "../../components/shared/Input";
+import { useChat } from "../../hooks/useChat";
 import { useInsight } from "../../hooks/useInsight";
 import { Content } from "../insights/Content";
 import { Error } from "../insights/Error";
@@ -13,6 +15,9 @@ interface AiInsightCardProps {
 
 export function AiInsightCard({ simulationId }: AiInsightCardProps) {
   const { insight, isLoading, error, fetchInsight } = useInsight(simulationId);
+  const [text, setText] = useState("");
+  const { chat, chatIsLoading, chatError, fetchChat } = useChat(simulationId);
+
   console.log(insight);
 
   return (
@@ -51,7 +56,17 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
           <Input
             type="text"
             placeholder="Digite sua mensagem..."
-            button={<Button variant="ghost" icon={{ iconName: Send }} />}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            button={
+              <Button
+                variant="ghost"
+                icon={{ iconName: Send }}
+                onClick={() => {
+                  fetchChat(simulationId, text);
+                }}
+              />
+            }
           />
         </div>
       )}
