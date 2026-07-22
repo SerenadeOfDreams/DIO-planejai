@@ -3,12 +3,14 @@ import { ParseCurrency } from "../utils/currency";
 import { calcMonthlySavings } from "../utils/simulation";
 import type { SimulationRecord } from "./simulation";
 
-const RESPONSE_SCHEMA = `[
-    "interaction": {
-        "request": "<Mensagem do usuário.>"
-        "response": "<Resposta ao usuário em relação à mensagem, mantendo em mente a simulação, o diagnóstico já recebido e o histórico de conversas daquela simulação caso haja.>"
-    }
-]`;
+const RESPONSE_SCHEMA = `{
+    "interaction": [
+        {
+            "request": "<Mensagem do usuário.>"
+            "response": "<Resposta ao usuário em relação à mensagem, mantendo em mente a simulação, o diagnóstico já recebido e o histórico de conversas daquela simulação caso haja.>"
+        }
+    ]
+}`;
 
 export function BuildAIChatPrompt(
   simulation: SimulationRecord,
