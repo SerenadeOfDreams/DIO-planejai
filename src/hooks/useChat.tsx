@@ -32,18 +32,14 @@ export const useChat = (id: string) => {
         setChatError("Mensagem não digitada.");
         return;
       }
+      setUserText(text);
 
       isRequestPending.current = true;
       setChatIsLoading(true);
       setChatError(null);
-      setUserText(text);
 
       try {
-        const prompt = BuildAIChatPrompt(
-          simulation,
-          simulation.insight!,
-          userText,
-        );
+        const prompt = BuildAIChatPrompt(simulation, simulation.insight!, text);
         const data = await getChatAnswer(prompt);
         setChat(data);
 
@@ -59,7 +55,7 @@ export const useChat = (id: string) => {
           chatData: {
             interaction: [
               ...(simulation.chatData?.interaction ?? []),
-              { request: userText, response: data.interaction[0].response },
+              { request: text, response: data.interaction[0].response },
             ],
           },
         } as SimulationRecord);
