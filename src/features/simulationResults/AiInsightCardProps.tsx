@@ -56,15 +56,6 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
         <div className="flex flex-col gap-6">
           <Content insight={insight} />
 
-          {/* {chat?.interaction && (
-            {Object.keys(chat).map((key, index) => (
-                <>
-                <UserMessage key={index} message={} />
-                <AiMessage message={chat.interaction.response} />
-                </>
-              ))}
-          )} */}
-
           {chatIsLoading && (
             <div className="flex">
               <Skeleton
@@ -107,13 +98,10 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
               <Button
                 variant="ghost"
                 icon={{ iconName: Send }}
-                onClick={() => {
-                  fetchChat(simulationId, text);
-                }}
+                onClick={() => fetchChat(simulationId, text)}
               />
             }
           />
-          <p>{text}</p>
         </div>
       )}
     </div>
