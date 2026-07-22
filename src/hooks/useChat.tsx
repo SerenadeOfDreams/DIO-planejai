@@ -28,19 +28,40 @@ export const useChat = (id: string) => {
         return;
       }
 
+      if (!text || text.trim() == "") {
+        setChatError("Mensagem não digitada.");
+        return;
+      }
+
       isRequestPending.current = true;
       setChatIsLoading(true);
       setChatError(null);
       setUserText(text);
 
       try {
-        const prompt = BuildAIChatPrompt(simulation, simulation.insight!, text);
+        const prompt = BuildAIChatPrompt(
+          simulation,
+          simulation.insight!,
+          userText,
+        );
         const data = await getChatAnswer(prompt);
         setChat(data);
 
+        if (!simulation.chatData) {
+          updateSimulation(simulationId, {
+            ...simulation,
+            chatData: data,
+          } as SimulationRecord);
+        }
+
         updateSimulation(simulationId, {
           ...simulation,
-          chatData: data,
+          chatData: {
+            interaction: [
+              ...(simulation.chatData?.interaction ?? []),
+              { request: userText, response: data.interaction[0].response },
+            ],
+          },
         } as SimulationRecord);
       } catch {
         setChatError("Erro ao gerar uma resposta. Tente novamente.");
