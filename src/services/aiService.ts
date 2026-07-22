@@ -34,7 +34,7 @@ export interface ChatData {
   interaction: {
     request: string;
     response: string;
-  };
+  }[];
 }
 
 const API_KEY = String(import.meta.env.VITE_GEMINI_API_KEY);
