@@ -1,8 +1,17 @@
 import type { PropsWithChildren } from "react";
-import type { InsightData } from "../../services/aiService";
+import Skeleton from "react-loading-skeleton";
+import type { ChatData, InsightData } from "../../services/aiService";
+import { AiMessage } from "../simulationResults/AiMessage";
+import { UserMessage } from "../simulationResults/UserMessage";
+import { Error } from "./Error";
 
 interface ContentProps {
   insight: InsightData;
+  chat?: ChatData | null;
+  chatIsLoading?: boolean;
+  chatError?: string | null;
+  text?: string;
+  simulationId: string;
 }
 
 function Paragraph({ children }: PropsWithChildren) {
@@ -48,7 +57,14 @@ const statusStyles = {
   },
 };
 
-export function Content({ insight }: ContentProps) {
+export function Content({
+  insight,
+  chat,
+  chatError,
+  chatIsLoading,
+  text,
+  simulationId,
+}: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null;
   return (
     <div className="lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]">
@@ -91,6 +107,41 @@ export function Content({ insight }: ContentProps) {
       <section>
         <SectionTitle>🚀 Mensagem final</SectionTitle>
         <Paragraph>{insight.motivation.content}</Paragraph>
+      </section>
+
+      <section className="flex flex-col gap-6 mt-6">
+        {chatIsLoading && (
+          <div className="flex">
+            <Skeleton
+              count={10}
+              className="mb-3 flex rounded-lg"
+              baseColor="var(--color-skeleton-base)"
+              highlightColor="var(--color-skeleton-highlight)"
+              containerClassName="flex-1"
+              inline
+            />
+          </div>
+        )}
+
+        {!chatIsLoading && chatError && (
+          <Error
+            simulationId={simulationId}
+            message={chatError}
+            onRetry={() => {}}
+          />
+        )}
+
+        {!chatIsLoading && chat?.interaction && !chatError && (
+          <>
+            <SectionTitle>Converse com a I.A</SectionTitle>
+            {chat.interaction.map((keys) => (
+              <div className="flex flex-col gap-6">
+                <UserMessage message={keys.request} />
+                <AiMessage message={keys.response} />
+              </div>
+            ))}
+          </>
+        )}
       </section>
     </div>
   );

@@ -8,8 +8,6 @@ import { useChat } from "../../hooks/useChat";
 import { useInsight } from "../../hooks/useInsight";
 import { Content } from "../insights/Content";
 import { Error } from "../insights/Error";
-import { AiMessage } from "./AiMessage";
-import { UserMessage } from "./UserMessage";
 
 interface AiInsightCardProps {
   simulationId: string;
@@ -54,41 +52,15 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
       )}
       {!isLoading && insight && !error && (
         <div className="flex flex-col gap-6">
-          <Content insight={insight} />
+          <Content
+            insight={insight}
+            chat={chat}
+            chatIsLoading={chatIsLoading}
+            chatError={chatError}
+            text={text}
+            simulationId={simulationId}
+          />
 
-          {chatIsLoading && (
-            <div className="flex">
-              <Skeleton
-                count={10}
-                className="mb-3 flex rounded-lg"
-                baseColor="var(--color-skeleton-base)"
-                highlightColor="var(--color-skeleton-highlight)"
-                containerClassName="flex-1"
-                inline
-              />
-            </div>
-          )}
-
-          {!chatIsLoading && chatError && (
-            <Error
-              simulationId={simulationId}
-              message={chatError}
-              onRetry={() => {
-                fetchChat(simulationId, text);
-              }}
-            />
-          )}
-
-          {!chatIsLoading && chat?.interaction && !chatError && (
-            <>
-              {chat.interaction.map((keys, index) => (
-                <div className="flex flex-col gap-6">
-                  <UserMessage message={keys.request} />
-                  <AiMessage message={keys.response} />
-                </div>
-              ))}
-            </>
-          )}
           <Input
             type="text"
             placeholder="Digite sua mensagem..."
