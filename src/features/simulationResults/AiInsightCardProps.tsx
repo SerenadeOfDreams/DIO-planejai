@@ -8,6 +8,8 @@ import { useChat } from "../../hooks/useChat";
 import { useInsight } from "../../hooks/useInsight";
 import { Content } from "../insights/Content";
 import { Error } from "../insights/Error";
+import { AiMessage } from "./AiMessage";
+import { UserMessage } from "./UserMessage";
 
 interface AiInsightCardProps {
   simulationId: string;
@@ -53,6 +55,49 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
       {!isLoading && insight && !error && (
         <div className="flex flex-col gap-6">
           <Content insight={insight} />
+
+          {/* {chat?.interaction && (
+            {Object.keys(chat).map((key, index) => (
+                <>
+                <UserMessage key={index} message={} />
+                <AiMessage message={chat.interaction.response} />
+                </>
+              ))}
+          )} */}
+
+          {chatIsLoading && (
+            <div className="flex">
+              <Skeleton
+                count={10}
+                className="mb-3 flex rounded-lg"
+                baseColor="var(--color-skeleton-base)"
+                highlightColor="var(--color-skeleton-highlight)"
+                containerClassName="flex-1"
+                inline
+              />
+            </div>
+          )}
+
+          {!chatIsLoading && chatError && (
+            <Error
+              simulationId={simulationId}
+              message={chatError}
+              onRetry={() => {
+                fetchChat(simulationId, text);
+              }}
+            />
+          )}
+
+          {!chatIsLoading && chat?.interaction && !chatError && (
+            <>
+              {chat.interaction.map((keys, index) => (
+                <div className="flex flex-col gap-6">
+                  <UserMessage message={keys.request} />
+                  <AiMessage message={keys.response} />
+                </div>
+              ))}
+            </>
+          )}
           <Input
             type="text"
             placeholder="Digite sua mensagem..."
@@ -68,6 +113,7 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
               />
             }
           />
+          <p>{text}</p>
         </div>
       )}
     </div>
