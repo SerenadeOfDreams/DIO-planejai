@@ -39,7 +39,12 @@ export const useChat = (id: string) => {
       setChatError(null);
 
       try {
-        const prompt = BuildAIChatPrompt(simulation, simulation.insight!, text);
+        const prompt = BuildAIChatPrompt(
+          simulation,
+          simulation.insight!,
+          text,
+          simulation.chatData,
+        );
         const data = await getChatAnswer(prompt);
         setChat(data);
 
@@ -73,7 +78,7 @@ export const useChat = (id: string) => {
     //Evita loop infinito de requisição para a API do Gemini
     if (chat || chatIsLoading || chatError || isRequestPending.current) return;
 
-    fetchChat(id, userText);
+    // fetchChat(id, userText);
   }, [id, chat, chatIsLoading, chatError, fetchChat]);
 
   return { chat, chatIsLoading, chatError, fetchChat };
