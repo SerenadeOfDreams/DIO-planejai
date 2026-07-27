@@ -64,6 +64,17 @@ export const useChat = (id: string) => {
             ],
           },
         } as SimulationRecord);
+
+        const updatedSimulation = getFormData(id);
+
+        if (!updatedSimulation) {
+          setChatError("Erro ao recarregar as mensagens.");
+          return;
+        }
+
+        const newData = updatedSimulation.chatData!;
+
+        setChat(newData);
       } catch {
         setChatError("Erro ao gerar uma resposta. Tente novamente.");
       } finally {
