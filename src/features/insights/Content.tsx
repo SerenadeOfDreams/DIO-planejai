@@ -89,20 +89,26 @@ export function Content({
         <Paragraph>{insight.diagnosis.content}</Paragraph>
       </section>
 
-      <section>
-        <SectionTitle>📋 Sugestões práticas</SectionTitle>
-        <OrderedList items={insight.suggestions.items} />
-      </section>
+      {insight.suggestions.items && (
+        <section>
+          <SectionTitle>📋 Sugestões práticas</SectionTitle>
+          <OrderedList items={insight.suggestions.items} />
+        </section>
+      )}
 
-      <section>
-        <SectionTitle>💡 Como aumentar sua renda</SectionTitle>
-        <OrderedList items={insight.extraIncome.items} />
-      </section>
+      {insight.extraIncome.items && (
+        <section>
+          <SectionTitle>💡 Como aumentar sua renda</SectionTitle>
+          <OrderedList items={insight.extraIncome.items} />
+        </section>
+      )}
 
-      <section>
-        <SectionTitle>🏦 Sugestões de investimento</SectionTitle>
-        <OrderedList items={insight.investiment.items} />
-      </section>
+      {insight.investiment.items && (
+        <section>
+          <SectionTitle>🏦 Sugestões de investimento</SectionTitle>
+          <OrderedList items={insight.investiment.items} />
+        </section>
+      )}
 
       <section>
         <SectionTitle>🚀 Mensagem final</SectionTitle>
