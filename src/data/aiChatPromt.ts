@@ -30,7 +30,7 @@ export function BuildAIChatPrompt(
     motivation: { content: motivationContent },
   } = insight;
 
-  const { interaction } = chatData ?? { interaction: [] };
+  const interaction = chatData?.interaction;
 
   const monthlySavings = calcMonthlySavings(simulation);
   const monthlySavingsNeeded =
@@ -74,5 +74,8 @@ export function BuildAIChatPrompt(
   - Verifique se a mensagem que o usuário mandou se relaciona com algum ponto do histórico de interações para manter uma conversa coesa.
   - interaction é um array de objetos. Cada objeto possui as propriedades request e response. Percorra cada objeto para analisar o histórico de interações, caso haja algum.
   - De início, verifique o conteúdo da última mensagem do usuário e o conteúdo da resposta a essa mensagem registrados em ${interaction} para saber como responder a ${newMessage}.
+
+  Observações da simulação:
+  - Caso identifique o que é a meta (viagem ou aquisição de algum bem) e o usuário peça alguma dica em relação a isso, verifique e retorne qual a melhor opção a seguir para o caso.
   `;
 }
