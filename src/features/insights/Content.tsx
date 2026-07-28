@@ -110,6 +110,8 @@ export function Content({
       </section>
 
       <section className="flex flex-col gap-6 mt-6">
+        <SectionTitle>Converse com a I.A</SectionTitle>
+
         {chatIsLoading && (
           <div className="flex">
             <Skeleton
@@ -133,7 +135,6 @@ export function Content({
 
         {!chatIsLoading && chat?.interaction && !chatError && (
           <>
-            <SectionTitle>Converse com a I.A</SectionTitle>
             {chat.interaction.map((keys) => (
               <div className="flex flex-col gap-6">
                 <UserMessage message={keys.request} />
