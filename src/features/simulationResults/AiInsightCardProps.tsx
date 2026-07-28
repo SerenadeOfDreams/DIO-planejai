@@ -70,7 +70,9 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
               <Button
                 variant="ghost"
                 icon={{ iconName: Send }}
-                onClick={() => fetchChat(simulationId, text)}
+                onClick={() => {
+                  (fetchChat(simulationId, text), setText(""));
+                }}
               />
             }
           />
