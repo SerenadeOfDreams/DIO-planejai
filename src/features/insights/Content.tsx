@@ -9,8 +9,6 @@ interface ContentProps {
   chat?: ChatData | null;
   chatIsLoading?: boolean;
   chatError?: string | null;
-  isLast?: boolean;
-  text?: string;
   simulationId: string;
 }
 
@@ -62,8 +60,6 @@ export function Content({
   chat,
   chatError,
   chatIsLoading,
-  isLast,
-  text,
   simulationId,
 }: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null;

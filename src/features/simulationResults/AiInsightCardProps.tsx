@@ -58,7 +58,6 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
             chat={chat}
             chatIsLoading={chatIsLoading}
             chatError={chatError}
-            text={text}
             simulationId={simulationId}
           />
 
