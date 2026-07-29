@@ -56,13 +56,7 @@ export const useChat = (id: string) => {
           const newData = simulationWithChatData.chatData!;
 
           setChat(newData);
-
-          //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
-          chat?.interaction.map((item, index) => {
-            setIsLast(index == chat.interaction.length - 1);
-          });
         }
-
         //Fim do if que verifica se não há histórico de mensagens.
 
         //Primeiro updateSimulation para salvar a mensagem do usuário na localstorage e exibir antes da resposta.
@@ -88,11 +82,6 @@ export const useChat = (id: string) => {
         const newData = simulationWithChatData.chatData!;
 
         setChat(newData);
-
-        //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
-        chat?.interaction.map((item, index) => {
-          setIsLast(index == chat.interaction.length - 1);
-        });
       } catch {
         setChatError("Erro ao enviar a mensagem. Tente novamente.");
       }
@@ -149,11 +138,6 @@ export const useChat = (id: string) => {
         const completeData = completeSimulation.chatData!;
 
         setChat(completeData);
-
-        //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
-        chat?.interaction.map((item, index) => {
-          setIsLast(index == chat.interaction.length - 1);
-        });
       } catch {
         setChatError("Erro ao gerar uma resposta. Tente novamente.");
       } finally {
@@ -167,7 +151,7 @@ export const useChat = (id: string) => {
   useEffect(() => {
     //Evita loop infinito de requisição para a API do Gemini
     if (chat || chatIsLoading || chatError || isRequestPending.current) return;
-  }, [id, chat, chatIsLoading, chatError, isLast, sendMessage, fetchChat]);
+  }, [id, chat, chatIsLoading, chatError, sendMessage, fetchChat]);
 
-  return { chat, chatIsLoading, chatError, isLast, sendMessage, fetchChat };
+  return { chat, chatIsLoading, chatError, sendMessage, fetchChat };
 };
