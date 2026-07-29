@@ -17,6 +17,88 @@ export const useChat = (id: string) => {
   const [chatError, setChatError] = useState<string | null>(null);
   const isRequestPending = useRef(false);
   const [userText, setUserText] = useState("");
+  const [isLast, setIsLast] = useState(false);
+
+  const sendMessage = useCallback(
+    async (simulationId: string, text: string) => {
+      const simulation = getFormData(simulationId);
+
+      if (!simulation) {
+        setChatError("Simulação não encontrada.");
+        return;
+      }
+
+      if (!text || text.trim() == "") {
+        setChatError("Mensagem não digitada.");
+        return;
+      }
+      setUserText(text);
+
+      try {
+        if (!simulation.chatData) {
+          //Primeiro updateSimulation para salvar a mensagem do usuário na localstorage e exibir antes da resposta.
+          updateSimulation(simulationId, {
+            ...simulation,
+            chatData: {
+              interaction: [{ request: text, response: "" }],
+            },
+          } as SimulationRecord);
+
+          //Pegando a simulação atualizada para exibição.
+
+          const simulationWithChatData = getFormData(id);
+
+          if (!simulationWithChatData) {
+            setChatError("Erro ao recarregar as mensagens.");
+            return;
+          }
+
+          const newData = simulationWithChatData.chatData!;
+
+          setChat(newData);
+
+          //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
+          chat?.interaction.map((item, index) => {
+            setIsLast(index == chat.interaction.length - 1);
+          });
+        }
+
+        //Fim do if que verifica se não há histórico de mensagens.
+
+        //Primeiro updateSimulation para salvar a mensagem do usuário na localstorage e exibir antes da resposta.
+        updateSimulation(simulationId, {
+          ...simulation,
+          chatData: {
+            interaction: [
+              ...(simulation.chatData?.interaction ?? []),
+              { request: text, response: "" },
+            ],
+          },
+        } as SimulationRecord);
+
+        //Pegando a simulação atualizada para exibição.
+
+        const simulationWithChatData = getFormData(id);
+
+        if (!simulationWithChatData) {
+          setChatError("Erro ao recarregar as mensagens.");
+          return;
+        }
+
+        const newData = simulationWithChatData.chatData!;
+
+        setChat(newData);
+
+        //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
+        chat?.interaction.map((item, index) => {
+          setIsLast(index == chat.interaction.length - 1);
+        });
+      } catch {
+        setChatError("Erro ao enviar a mensagem. Tente novamente.");
+      }
+    },
+    [getFormData, updateSimulation],
+  );
 
   //Esse useCallBack é para passar a fetchChat como array de dependências da useEffect abaixo
   const fetchChat = useCallback(
@@ -27,12 +109,6 @@ export const useChat = (id: string) => {
         setChatError("Simulação não encontrada");
         return;
       }
-
-      if (!text || text.trim() == "") {
-        setChatError("Mensagem não digitada.");
-        return;
-      }
-      setUserText(text);
 
       isRequestPending.current = true;
       setChatIsLoading(true);
@@ -48,33 +124,36 @@ export const useChat = (id: string) => {
         const data = await getChatAnswer(prompt);
         setChat(data);
 
-        if (!simulation.chatData) {
-          updateSimulation(simulationId, {
-            ...simulation,
-            chatData: data,
-          } as SimulationRecord);
-        }
-
-        updateSimulation(simulationId, {
+        //updateSimulation para salvar a resposta na respectiva interaction.
+        updateSimulation(simulation.id, {
           ...simulation,
           chatData: {
             interaction: [
-              ...(simulation.chatData?.interaction ?? []),
-              { request: text, response: data.interaction[0].response },
+              ...(simulation.chatData?.interaction ?? []).map(
+                (item, index, array) =>
+                  index == array.length - 1
+                    ? { ...item, response: data.interaction[0].response }
+                    : item,
+              ),
             ],
           },
         } as SimulationRecord);
 
-        const updatedSimulation = getFormData(id);
+        const completeSimulation = getFormData(id);
 
-        if (!updatedSimulation) {
+        if (!completeSimulation) {
           setChatError("Erro ao recarregar as mensagens.");
           return;
         }
 
-        const newData = updatedSimulation.chatData!;
+        const completeData = completeSimulation.chatData!;
 
-        setChat(newData);
+        setChat(completeData);
+
+        //Tentando verificar se a interaction atual é a última para fazer o skeleton aparecer somente no carregamento da última resposta da i.a
+        chat?.interaction.map((item, index) => {
+          setIsLast(index == chat.interaction.length - 1);
+        });
       } catch {
         setChatError("Erro ao gerar uma resposta. Tente novamente.");
       } finally {
@@ -88,9 +167,7 @@ export const useChat = (id: string) => {
   useEffect(() => {
     //Evita loop infinito de requisição para a API do Gemini
     if (chat || chatIsLoading || chatError || isRequestPending.current) return;
+  }, [id, chat, chatIsLoading, chatError, isLast, sendMessage, fetchChat]);
 
-    // fetchChat(id, userText);
-  }, [id, chat, chatIsLoading, chatError, fetchChat]);
-
-  return { chat, chatIsLoading, chatError, fetchChat };
+  return { chat, chatIsLoading, chatError, isLast, sendMessage, fetchChat };
 };
