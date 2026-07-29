@@ -3,13 +3,13 @@ import Skeleton from "react-loading-skeleton";
 import type { ChatData, InsightData } from "../../services/aiService";
 import { AiMessage } from "../simulationResults/AiMessage";
 import { UserMessage } from "../simulationResults/UserMessage";
-import { Error } from "./Error";
 
 interface ContentProps {
   insight: InsightData;
   chat?: ChatData | null;
   chatIsLoading?: boolean;
   chatError?: string | null;
+  isLast?: boolean;
   text?: string;
   simulationId: string;
 }
@@ -62,6 +62,7 @@ export function Content({
   chat,
   chatError,
   chatIsLoading,
+  isLast,
   text,
   simulationId,
 }: ContentProps) {
@@ -118,33 +119,25 @@ export function Content({
       <section className="flex flex-col gap-6 mt-6">
         <SectionTitle>Converse com a I.A</SectionTitle>
 
-        {chatIsLoading && (
-          <div className="flex">
-            <Skeleton
-              count={10}
-              className="mb-3 flex rounded-lg"
-              baseColor="var(--color-skeleton-base)"
-              highlightColor="var(--color-skeleton-highlight)"
-              containerClassName="flex-1"
-              inline
-            />
-          </div>
-        )}
-
-        {!chatIsLoading && chatError && (
-          <Error
-            simulationId={simulationId}
-            message={chatError}
-            onRetry={() => {}}
-          />
-        )}
-
-        {!chatIsLoading && chat?.interaction && !chatError && (
+        {chat?.interaction && !chatError && (
           <>
             {chat.interaction.map((keys) => (
               <div className="flex flex-col gap-6">
                 <UserMessage message={keys.request} />
-                <AiMessage message={keys.response} />
+                {chatIsLoading && !keys.response ? (
+                  <div className="flex">
+                    <Skeleton
+                      count={3}
+                      className="mb-3 flex rounded-lg"
+                      baseColor="var(--color-skeleton-base)"
+                      highlightColor="var(--color-skeleton-highlight)"
+                      containerClassName="flex-1"
+                      inline
+                    />
+                  </div>
+                ) : (
+                  <AiMessage message={keys.response} />
+                )}
               </div>
             ))}
           </>
