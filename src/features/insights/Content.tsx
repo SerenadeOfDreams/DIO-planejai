@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { useEffect, useRef, type PropsWithChildren } from "react";
 import Skeleton from "react-loading-skeleton";
 import type { ChatData, InsightData } from "../../services/aiService";
 import { AiMessage } from "../simulationResults/AiMessage";
@@ -63,8 +63,21 @@ export function Content({
   simulationId,
 }: ContentProps) {
   const status = statusStyles[insight.feasibility.status] ?? null;
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTo({
+        top: messagesEndRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [chat?.interaction.length, chatIsLoading]);
   return (
-    <div className="lg:scrollbar-thin lg:max-h-93 lg:overflow-y-auto lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]">
+    <div
+      ref={messagesEndRef}
+      className="overflow-y-auto lg:scrollbar-thin lg:max-h-93 lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]"
+    >
       <section className="flex flex-col gap-2">
         <div className="flex flex-col items-start gap-2 sm:flex-row">
           <span className="text-foreground text-sm font-semibold">
