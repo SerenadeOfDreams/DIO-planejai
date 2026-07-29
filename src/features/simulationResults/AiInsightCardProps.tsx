@@ -16,7 +16,8 @@ interface AiInsightCardProps {
 export function AiInsightCard({ simulationId }: AiInsightCardProps) {
   const { insight, isLoading, error, fetchInsight } = useInsight(simulationId);
   const [text, setText] = useState("");
-  const { chat, chatIsLoading, chatError, fetchChat } = useChat(simulationId);
+  const { chat, chatIsLoading, chatError, isLast, sendMessage, fetchChat } =
+    useChat(simulationId);
 
   console.log(insight);
 
@@ -57,6 +58,7 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
             chat={chat}
             chatIsLoading={chatIsLoading}
             chatError={chatError}
+            isLast={isLast}
             text={text}
             simulationId={simulationId}
           />
@@ -71,7 +73,9 @@ export function AiInsightCard({ simulationId }: AiInsightCardProps) {
                 variant="ghost"
                 icon={{ iconName: Send }}
                 onClick={() => {
-                  (fetchChat(simulationId, text), setText(""));
+                  (sendMessage(simulationId, text),
+                    fetchChat(simulationId, text),
+                    setText(""));
                 }}
               />
             }
