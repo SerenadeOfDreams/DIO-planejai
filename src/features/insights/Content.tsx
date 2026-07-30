@@ -66,17 +66,20 @@ export function Content({
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollTo({
-        top: messagesEndRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-    }
+    window.innerWidth > 768 && messagesEndRef.current
+      ? messagesEndRef.current.scrollTo({
+          top: messagesEndRef.current.scrollHeight,
+          behavior: "smooth",
+        })
+      : window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
   }, [chat?.interaction.length, chatIsLoading]);
   return (
     <div
       ref={messagesEndRef}
-      className="overflow-y-auto lg:scrollbar-thin lg:max-h-93 lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]"
+      className="lg:overflow-y-auto lg:scrollbar-thin lg:max-h-93 lg:pr-2 lg:[scrollbar-color:var-(--border)_transparent]"
     >
       <section className="flex flex-col gap-2">
         <div className="flex flex-col items-start gap-2 sm:flex-row">
