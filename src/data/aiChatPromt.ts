@@ -74,6 +74,7 @@ export function BuildAIChatPrompt(
   - Verifique se a mensagem que o usuário mandou se relaciona com algum ponto do histórico de interações para manter uma conversa coesa.
   - interaction é um array de objetos. Cada objeto possui as propriedades request e response. Percorra cada objeto para analisar o histórico de interações, caso haja algum.
   - De início, verifique o conteúdo da última mensagem do usuário e o conteúdo da resposta a essa mensagem registrados em ${interaction} para saber como responder a ${newMessage}.
+  - Caso não haja nexo na mensagem do usuário, não precisa responder com algo relacionado à simulação. Só avise que não foi possível compreender bem o que foi digitado (caso o usuário tenha enviado uma única letra ou uma palavra aleatória que não se encaixa na conversa).
 
   Observações da simulação:
   - Caso identifique o que é a meta (viagem ou aquisição de algum bem) e o usuário peça alguma dica em relação a isso, verifique e retorne qual a melhor opção a seguir para o caso.
