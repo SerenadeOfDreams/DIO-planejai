@@ -1,75 +1,24 @@
-# React + TypeScript + Vite
+# PLANEJ.AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Olá. Me chamo Arthur e esse é o meu repositório do Planej.ai, aplicação de ajuda financeira desenvolvida como prática de conhecimento da bootcamp de React e I.A generativa do Santander Academy em parceria com a DIO.me.
 
-Currently, two official plugins are available:
+Para testar, clone o repositório e, no terminal do diretório onde você colocou o projeto, rode o comando "npm install" ou "npm i" para baixar as dependências necessárias.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+# Sobre o projeto
 
-## React Compiler
+O Planej.ai possui quatro funcionalidades principais: simulações financeiras, diagnósticos financeiros, uma conversa com inteligência artificial e um histórico de simulações.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Primeiro é feita a simulação onde o usuário informa sua renda, gastos e dívidas, a meta que deseja alcançar, o valor da meta e o prazo para alcançá-la.
 
-## Expanding the ESLint configuration
+Depois, é feito um diagnóstico através do Google Gemni em relação às informações passadas para saber se a meta é viável e o que é possível fazer caso não seja.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Após, o usuário pode conversar com o Gemni para tirar dúvidas ou ter mais informações a respeito do plano financeiro apresentado.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Essas informações ficam salvas na localstorage do navegador e podem ser acessadas na aba de histórico da aplicação. Caso o usuário desejar, ele pode excluir uma simulação.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Contato
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Caso desejar, pode me contatar através do LinkedIn ou ver meu perfil na DIO.
 
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=30A3DC)](https://www.linkedin.com/in/arthur-silva-42aa33197)
+[![Perfil DIO](https://img.shields.io/badge/-Meu%20Perfil%20na%20DIO-30A3DC?style=for-the-badge)](https://web.dio.me/users/arthur1601_ssilva/)
