@@ -130,8 +130,8 @@ export function Content({
 
         {chat?.interaction && !chatError && (
           <>
-            {chat.interaction.map((keys) => (
-              <div className="flex flex-col gap-6">
+            {chat.interaction.map((keys, index) => (
+              <div key={index} className="flex flex-col gap-6">
                 <UserMessage message={keys.request} />
                 {chatIsLoading && !keys.response ? (
                   <div className="flex">
