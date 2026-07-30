@@ -17,7 +17,6 @@ export const useChat = (id: string) => {
   const [chatError, setChatError] = useState<string | null>(null);
   const isRequestPending = useRef(false);
   const [userText, setUserText] = useState("");
-  const [isLast, setIsLast] = useState(false);
 
   const sendMessage = useCallback(
     async (simulationId: string, text: string) => {
