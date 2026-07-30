@@ -135,7 +135,9 @@ export function Content({
           <>
             {chat.interaction.map((keys, index) => (
               <div key={index} className="flex flex-col gap-6">
-                <UserMessage message={keys.request} />
+                <div className="flex justify-end">
+                  <UserMessage message={keys.request} />
+                </div>
                 {chatIsLoading && !keys.response ? (
                   <div className="flex">
                     <Skeleton
@@ -148,7 +150,9 @@ export function Content({
                     />
                   </div>
                 ) : (
-                  <AiMessage message={keys.response} />
+                  <div className="flex justify-start">
+                    <AiMessage message={keys.response} />
+                  </div>
                 )}
               </div>
             ))}
