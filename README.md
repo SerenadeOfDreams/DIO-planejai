@@ -2,7 +2,27 @@
 
 Olá. Me chamo Arthur e esse é o meu repositório do Planej.ai, aplicação de ajuda financeira desenvolvida como prática de conhecimento da bootcamp de React e I.A generativa do Santander Academy em parceria com a DIO.me utilizando [React](https://react.dev/) com [TypeScript](https://www.typescriptlang.org/), a API Gemni Flash generative e as bibliotecas [Tailwindcss](https://tailwindcss.com/docs/installation/using-vite), [Lucide Icons](https://lucide.dev/) e [React Loading Skeleton](https://github.com/dvtng/react-loading-skeleton).
 
-Para testar, clone o repositório e, no terminal do diretório onde você colocou o projeto, rode o comando "npm install" ou "npm i" para baixar as dependências necessárias. Após a instalação das pedendências, use o comando "npm run dev" para executar o projeto, copie o endereço gerado do terminal e cole na barra de pesquisa do navegador.
+# Como rodar
+
+- Instale o [Node.js](https://nodejs.org/pt-br) para seu sistema operacional (de preferência, a versão mais recente);
+- Clone o repositório em um diretório da sua preferência;
+- No prompt de comando, no diretório onde você colocou o projeto, rode o seguinte comando:
+  ```
+  npm install
+  ```
+  ou:
+  ```
+  npm i
+  ```
+  para baixar as dependências necessárias;
+
+Após a instalação das pedendências, use o comando:
+
+```
+npm run dev
+```
+
+para executar o projeto, copie o endereço gerado do terminal e cole na barra de pesquisa do navegador.
 
 # Sobre o projeto
 
